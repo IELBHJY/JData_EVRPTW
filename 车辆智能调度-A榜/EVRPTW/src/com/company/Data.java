@@ -22,14 +22,14 @@ public class Data {
     public HashMap<Integer,Node> shops;
     public HashMap<Integer,Recharge> recharges;
     public HashMap<Integer,Vehicle> vehicles;
-    private static SimpleDateFormat hms = new SimpleDateFormat(  "HH:mm");
+    private static SimpleDateFormat hms = new SimpleDateFormat(  "yyyy-MM-dd HH:mm");
     public void readTransportionData()
     {
         shops=new HashMap<Integer, Node>();
         recharges=new HashMap<Integer, Recharge>();
         try {
             ArrayList<String[]> csvFileList = new ArrayList<String[]>();
-            String csvFilePath = "/Users/apple/Documents/车辆智能调度-A榜/input_node.csv";
+            String csvFilePath = "data/input_node.csv";
             CsvReader reader = new CsvReader(csvFilePath, ',', Charset.forName("UTF-8"));
             while (reader.readRecord()){
                 csvFileList.add(reader.getValues());
@@ -39,8 +39,8 @@ public class Data {
             deport=Integer.parseInt(strData[0]);
             lng=Double.parseDouble(strData[2]);
             lat=Double.parseDouble(strData[3]);
-            first_tm=hms.parse(strData[6]);
-            last_tm=hms.parse(strData[7]);
+            first_tm=hms.parse("2018-04-09 "+strData[6]);
+            last_tm=hms.parse("2018-04-09 "+strData[7]);
             for (int i = 2; i<csvFileList.size(); i++) {
                 strData = csvFileList.get(i);
                 if(i<1002){
@@ -50,8 +50,8 @@ public class Data {
                     node.lat=Double.parseDouble(strData[3]);
                     node.pack_total_weight=Double.parseDouble(strData[4]);
                     node.getPack_total_volume=Double.parseDouble(strData[5]);
-                    node.first_receive_tm=hms.parse(strData[6]);
-                    node.last_receive_tm=hms.parse(strData[7]);
+                    node.first_receive_tm=hms.parse("2018-04-09 "+strData[6]);
+                    node.last_receive_tm=hms.parse("2018-04-09 "+strData[7]);
                     shops.put(node.id,node);
                 }else{
                     Recharge recharge=new Recharge();
@@ -69,7 +69,7 @@ public class Data {
     public void readDistanceTime(){
         distances=new int[1101][1101];
         times=new int[1101][1101];
-        String path="/Users/apple/Documents/车辆智能调度-A榜/input_distance-time.txt";
+        String path="data/input_distance-time.txt";
         try {
             Scanner cin = new Scanner(new BufferedReader(new FileReader(path)));
             String line=cin.nextLine();
